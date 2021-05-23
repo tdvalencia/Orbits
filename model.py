@@ -1,6 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+import matplotlib.animation as anime
 import json
 
 class PlotTraj:
@@ -31,16 +30,28 @@ class PlotTraj:
         ax.set_xlim(-200000000000, 200000000000)
         ax.set_ylim(-200000000000, 200000000000)
 
-        self.star,    = ax.plot(0, 0, 'o-', color='orange', markersize=12)
+        self.star,    = ax.plot(-147095000000.0, 0, 'o-', color='orange', markersize=12)
         self.planet,  = ax.plot(0, 0, 'o-', color='blue')
 
-        animation = FuncAnimation(fig, func=self._update, frames=self.steps, interval=50)
+        animation = anime.FuncAnimation(fig, self._update, self.steps, interval=25)
 
         # Aesthetics
-        plt.axis('off')
+        plt.grid()
         fig.canvas.manager.set_window_title('Orbit Simulation')
 
         plt.show()
+
+    def save(self):
+        fig, ax = plt.subplots()
+
+        ax.set_xlim(-200000000000, 200000000000)
+        ax.set_ylim(-200000000000, 200000000000)
+
+        self.star,    = ax.plot(-147095000000.0, 0, 'o-', color='orange', markersize=12)
+        self.planet,  = ax.plot(0, 0, 'o-', color='blue')
+
+        animation = anime.FuncAnimation(fig, self._update, self.steps, interval=25)
+        animation.save('docs/orbits.gif', writer='imagemagick', fps=30)
 
 if __name__ == '__main__':
     plot = PlotTraj('orbits.json')

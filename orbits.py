@@ -74,7 +74,7 @@ def simulate():
     EARTH_MASS      = 5.972e24
     EARTH_RADIUS    = 6371000.0
 
-    steps = 368
+    steps = 365
     dt = 86400.0 # earth day in seconds
 
     sun = Body('Sun', (0,0), (0,0), SUN_MASS, SUN_RADIUS)
