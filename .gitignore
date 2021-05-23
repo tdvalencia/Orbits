@@ -118,3 +118,7 @@ dmypy.json
 
 # Data
 orbits.json
+*.mp4
+
+*.gif
+!orbits.gif
