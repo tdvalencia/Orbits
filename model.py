@@ -4,7 +4,7 @@ from matplotlib.animation import FuncAnimation
 import json
 
 class PlotTraj:
-    '''used to visualize all the data from the simulation''''
+    '''used to visualize all the data from the simulation'''
     
     def __init__(self, fn):
         '''reads all the data from json file'''
