@@ -1,3 +1,5 @@
 Planet Orbit Simulation
 
-followed some cirrculum from Temple University final project.
+Followed some cirrculum from Temple University final project
+
+![](./orbits.gif)
