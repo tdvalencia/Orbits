@@ -27,8 +27,8 @@ class PlotTraj:
 
         fig, ax = plt.subplots()
 
-        ax.set_xlim(-200000000000, 200000000000)
-        ax.set_ylim(-200000000000, 200000000000)
+        ax.set_xlim(-3e11, 3e11)
+        ax.set_ylim(-3e11, 3e11)
 
         self.star,    = ax.plot(-147095000000.0, 0, 'o-', color='orange', markersize=12)
         self.planet,  = ax.plot(0, 0, 'o-')
@@ -37,7 +37,7 @@ class PlotTraj:
 
         # Aesthetics
         plt.grid()
-        fig.canvas.manager.set_window_title('Orbit Simulation')
+        fig.canvas.manager.set_window_title('Big Shaq Quick Maths')
 
         plt.show()
 

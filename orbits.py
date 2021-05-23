@@ -59,7 +59,7 @@ class Body:
         yn = self.pos[1] + dt/6 * (k1y + 2*k2y + 2*k3y + k4y)
         self.pos = (xn, yn)
 
-        #calc new vel
+        # calc new vel
         vxn = self.vel[0] + dt/6 * (k1vx + 2*k2vx + 2*k3vx + k4vx)
         vyn = self.vel[1] + dt/6 * (k1vy + 2*k2vy + 2*k3vy + k4vy)
         self.vel = (vxn, vyn)
@@ -74,8 +74,8 @@ def simulate():
     EARTH_MASS      = 5.972e24
     EARTH_RADIUS    = 6371000.0
 
-    steps = 365
-    dt = 86400.0 # earth day in seconds
+    steps = 377
+    dt = 86400.0 # 1 earth day in seconds
 
     sun = Body('Sun', (0,0), (0,0), SUN_MASS, SUN_RADIUS)
     earth = Body('Earth', EARTH_INIT_POS, EARTH_INIT_VEL, EARTH_MASS, EARTH_RADIUS)
