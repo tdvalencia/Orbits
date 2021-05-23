@@ -50,6 +50,9 @@ class PlotTraj:
         self.star,    = ax.plot(-147095000000.0, 0, 'o-', color='orange', markersize=12)
         self.planet,  = ax.plot(0, 0, 'o-', color='blue')
 
+        plt.grid()
+        ax.set_title('Orbit Simulation')
+
         animation = anime.FuncAnimation(fig, self._update, self.steps, interval=25)
         animation.save('docs/orbits.gif', writer='imagemagick', fps=30)
 
