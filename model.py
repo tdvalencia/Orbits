@@ -31,7 +31,7 @@ class PlotTraj:
         ax.set_ylim(-200000000000, 200000000000)
 
         self.star,    = ax.plot(-147095000000.0, 0, 'o-', color='orange', markersize=12)
-        self.planet,  = ax.plot(0, 0, 'o-', color='blue')
+        self.planet,  = ax.plot(0, 0, 'o-')
 
         animation = anime.FuncAnimation(fig, self._update, self.steps, interval=25)
 
@@ -48,7 +48,7 @@ class PlotTraj:
         ax.set_ylim(-200000000000, 200000000000)
 
         self.star,    = ax.plot(-147095000000.0, 0, 'o-', color='orange', markersize=12)
-        self.planet,  = ax.plot(0, 0, 'o-', color='blue')
+        self.planet,  = ax.plot(0, 0, 'o-')
 
         plt.grid()
         ax.set_title('Orbit Simulation')
