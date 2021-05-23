@@ -115,3 +115,6 @@ dmypy.json
 
 # VScode
 .vscode
+
+# Data
+orbits.json
