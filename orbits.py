@@ -4,6 +4,8 @@ import json
 #TODO: Do orbital mechanics math...
 
 class Body:
+    '''does some maths to model orbits'''
+
     def __init__(self, name, position, velocity, mass, radius):
         self.name = name
         self.pos = position
@@ -61,37 +63,6 @@ class Body:
         vxn = self.vel[0] + dt/6 * (k1vx + 2*k2vx + 2*k3vx + k4vx)
         vyn = self.vel[1] + dt/6 * (k1vy + 2*k2vy + 2*k3vy + k4vy)
         self.vel = (vxn, vyn)
-
-
-def example1():
-    SUN_MASS = 1.989e30
-    SUN_RADIUS = 695700000.0
-
-    sun = Body('Sun', (0,0), (0,0), SUN_MASS, SUN_RADIUS)
-
-    ax, ay = sun.compute_acceleration(1000000000.0, 500000000.0)
-
-    print(f'ax: {ax}')
-    print(f'ay: {ay}')
-
-def example2():
-    SUN_MASS        = 1.989e30
-    SUN_RADIUS      = 695700000.0
-
-    EARTH_INIT_POS  = (-147095000000.0, 0.0)
-    EARTH_INIT_VEL  = (0.0, -30300.0)
-    EARTH_MASS      = 5.972e24
-    EARTH_RADIUS    = 6371000.0
-
-    dt = 86400.0 # earth day in seconds
-
-    sun = Body('Sun', (0,0), (0,0), SUN_MASS, SUN_RADIUS)
-    earth = Body('Earth', EARTH_INIT_POS, EARTH_INIT_VEL, EARTH_MASS, EARTH_RADIUS)
-
-    earth.step(dt, sun)
-
-    print(f'pos: {earth.pos}')
-    print(f'vel: {earth.vel}')
 
 def simulate():
 
