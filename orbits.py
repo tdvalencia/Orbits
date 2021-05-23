@@ -94,9 +94,9 @@ def simulate():
         content['TRAJECTORIES'] = []
 
         for x in range(steps):
-            earth.step(dt, sun)
             print(f'{x} | pos: {earth.pos}, vel: {earth.vel}')
             content['TRAJECTORIES'].append(f'{x} {sun.pos[0]} {sun.pos[1]} {earth.pos[0]} {earth.pos[1]}')
+            earth.step(dt, sun)
 
         f.seek(0)
         json.dump(content, f, indent=4)
