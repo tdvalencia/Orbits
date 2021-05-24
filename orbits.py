@@ -1,7 +1,7 @@
 import numpy as np
 import json
 
-#TODO: Do orbital mechanics math...
+#TODO: 🌌 Do orbital mechanics math...
 
 class Body:
     '''does some maths to model orbits'''
@@ -14,9 +14,12 @@ class Body:
         self.rad = radius
 
     def compute_acceleration(self, x, y):
-        '''does some maths to find the acceleration of a body. Newton's F=ma and Gravitational Force between two bodies.'''
+        '''
+        does some maths to find the acceleration of a body. 
+        Newton's F=ma and Gravitational Force between two bodies.
+        '''
 
-        G = 6.67408 * (10**-11)
+        G = 6.67408e-11
         m = self.mass
 
         dx = x - self.pos[0]
@@ -33,7 +36,11 @@ class Body:
         return ax, ay
 
     def step(self, dt, body):
-        '''4th-order Runge-Kutta integrator. <<< idk what this means'''
+        '''
+            4th-order Runge-Kutta integrator.
+            A method used to solve Ordinary Differential equations.
+            More accurate than Euler method.
+        '''
 
         # k1 params
         k1x, k1y = self.vel[0], self.vel[1]
@@ -80,7 +87,7 @@ def simulate():
     sun = Body('Sun', (0,0), (0,0), SUN_MASS, SUN_RADIUS)
     earth = Body('Earth', EARTH_INIT_POS, EARTH_INIT_VEL, EARTH_MASS, EARTH_RADIUS)
 
-    print(f'0 | init_pos: {EARTH_INIT_POS}, init_vel: {EARTH_INIT_VEL}')
+    print(f'0 | init_pos: {earth.pos}, init_vel: {earth.vel}, init_mass: {earth.mass}')
 
     with open('orbits.json', 'w', encoding='utf-8') as f:
 

@@ -30,10 +30,10 @@ class PlotTraj:
         ax.set_xlim(-3e11, 3e11)
         ax.set_ylim(-3e11, 3e11)
 
-        self.star,    = ax.plot(-147095000000.0, 0, 'o-', color='orange', markersize=12)
+        self.star,    = ax.plot(0, 0, 'o-', color='orange', markersize=12)
         self.planet,  = ax.plot(0, 0, 'o-')
 
-        animation = anime.FuncAnimation(fig, self._update, self.steps, interval=10)
+        animation = anime.FuncAnimation(fig, self._update, self.steps, interval=25)
 
         # Aesthetics
         plt.grid()
@@ -41,26 +41,27 @@ class PlotTraj:
 
         plt.show()
 
-    def save(self, out, fn='orbits'):
+    def save(self, out, fn='orbits', fps=30):
         fig, ax = plt.subplots()
 
         ax.set_xlim(-3e11, 3e11)
         ax.set_ylim(-3e11, 3e11)
 
-        self.star,    = ax.plot(-147095000000.0, 0, 'o-', color='orange', markersize=12)
+        self.star,    = ax.plot(0, 0, 'o-', color='orange', markersize=12)
         self.planet,  = ax.plot(0, 0, 'o-')
 
         plt.grid()
         ax.set_title('Orbit Simulation')
 
         if out.lower() == 'gif':
-            animation = anime.FuncAnimation(fig, self._update, self.steps, interval=25)
-            animation.save(f'docs/{fn}.gif', writer='imagemagick', fps=30)
+            animation = anime.FuncAnimation(fig, self._update, self.steps, interval=10)
+            animation.save(f'docs/{fn}.gif', writer='imagemagick', fps=fps) 
         
         elif out.lower() == 'mp4':
-            animation = anime.FuncAnimation(fig, self._update, self.steps, interval=25)
-            animation.save(f'docs/{fn}.mp4', writer='ffmpeg', fps=30)        
+            animation = anime.FuncAnimation(fig, self._update, self.steps, interval=10)
+            animation.save(f'docs/{fn}.mp4', writer='ffmpeg', fps=fps)        
 
 if __name__ == '__main__':
     plot = PlotTraj('orbits.json')
-    plot.save('mp4')
+    # plot.save('gif', 'zoom', 50)
+    plot.animate()

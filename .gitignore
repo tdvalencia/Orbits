@@ -122,3 +122,6 @@ orbits.json
 
 *.gif
 !orbits.gif
+
+*.un~
+*.py~
