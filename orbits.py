@@ -15,8 +15,8 @@ class Body:
 
     def compute_acceleration(self, x, y):
         '''
-        does some maths to find the acceleration of a body. 
-        Newton's F=ma and Gravitational Force between two bodies.
+            does some maths to find the acceleration of a body. 
+            Newton's F=ma and Gravitational Force between two bodies.
         '''
 
         G = 6.67408e-11
@@ -40,6 +40,13 @@ class Body:
             4th-order Runge-Kutta integrator.
             A method used to solve Ordinary Differential equations.
             More accurate than Euler method.
+
+            In this case it solves:
+
+                :x = Fx / m
+                :y = Fy / m
+
+            Otherwise known as the equation of motion of the planet
         '''
 
         # k1 params
