@@ -81,13 +81,11 @@ def simulate():
     EARTH_MASS      = 5.972e24
     EARTH_RADIUS    = 6371000.0
 
-    steps = 377
+    steps = 378
     dt = 86400.0 # 1 earth day in seconds
 
     sun = Body('Sun', (0,0), (0,0), SUN_MASS, SUN_RADIUS)
     earth = Body('Earth', EARTH_INIT_POS, EARTH_INIT_VEL, EARTH_MASS, EARTH_RADIUS)
-
-    print(f'0 | init_pos: {earth.pos}, init_vel: {earth.vel}, init_mass: {earth.mass}')
 
     with open('orbits.json', 'w', encoding='utf-8') as f:
 

@@ -113,8 +113,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# VScode
+# Project related
 .vscode
+prompt.pdf
 
 # Data
 orbits.json
