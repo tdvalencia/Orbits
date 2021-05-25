@@ -1,5 +1,6 @@
-Planet Orbit Simulation
+# Planetary Orbit Simulation
 
-Followed some cirrculum from Temple University final project
+Followed some cirrculum from a Temple University final project.
+Uses Matplotlib for visualization.
 
 ![](./orbits.gif)
