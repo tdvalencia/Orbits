@@ -17,7 +17,7 @@ class PlotTraj:
         '''updates the position for each frame of the animation'''
 
         trajectories = self.data['TRAJECTORIES'][frame].split(' ')
-        print(f'{trajectories[0]} | pos: ({trajectories[3]}, {trajectories[4]})')
+        # print(f'{trajectories[0]} | pos: ({trajectories[3]}, {trajectories[4]})')
 
         self.star.set_data(float(trajectories[1]), float(trajectories[2]))
         self.planet.set_data(float(trajectories[3]), float(trajectories[4]))
@@ -63,5 +63,5 @@ class PlotTraj:
 
 if __name__ == '__main__':
     plot = PlotTraj('orbits.json')
-    # plot.save('gif', 'zoom', 50)
+    # plot.save('gif', 'orbits', 50)
     plot.animate()
