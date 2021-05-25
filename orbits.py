@@ -78,7 +78,7 @@ class Body:
         vyn = self.vel[1] + dt/6 * (k1vy + 2*k2vy + 2*k3vy + k4vy)
         self.vel = (vxn, vyn)
 
-def simulate():
+def simulate(fn):
 
     SUN_MASS        = 1.989e30
     SUN_RADIUS      = 695700000.0
@@ -94,7 +94,7 @@ def simulate():
     sun = Body('Sun', (0,0), (0,0), SUN_MASS, SUN_RADIUS)
     earth = Body('Earth', EARTH_INIT_POS, EARTH_INIT_VEL, EARTH_MASS, EARTH_RADIUS)
 
-    with open('orbits.json', 'w', encoding='utf-8') as f:
+    with open(fn, 'w', encoding='utf-8') as f:
 
         # add data to json
         content = {}
@@ -115,4 +115,4 @@ def simulate():
         f.truncate()
 
 if __name__ == '__main__':
-    simulate()
+    simulate('orbits.json')
