@@ -88,27 +88,37 @@ def simulate(fn):
     EARTH_MASS      = 5.972e24
     EARTH_RADIUS    = 6371000.0
 
+    MARS_INIT_POS   = (-206620000000.0, 0.0)
+    MARS_INIT_VEL   = (0.0, -26500.0)
+    MARS_MASS       = 6.4171e23
+    MARS_RADIUS     = 3389500.0
+
     steps = 378
     dt = 86400.0 # 1 earth day in seconds
 
     sun = Body('Sun', (0,0), (0,0), SUN_MASS, SUN_RADIUS)
     earth = Body('Earth', EARTH_INIT_POS, EARTH_INIT_VEL, EARTH_MASS, EARTH_RADIUS)
+    mars = Body('Mars', MARS_INIT_POS, MARS_INIT_VEL, MARS_MASS, MARS_RADIUS)
 
     with open(fn, 'w', encoding='utf-8') as f:
 
         # add data to json
         content = {}
-        content['NUM_BODIES']   = 2
+        content['NUM_BODIES']   = 3
         content['NUM_STEPS']    = steps
-        content['NAMES']        = [sun.name, earth.name]
-        content['MASSES']       = [sun.mass, earth.mass]
-        content['RADII']        = [sun.rad, earth.rad]
+        content['NAMES']        = [sun.name, earth.name, mars.name]
+        content['COLORS']       = ['orange', 'lightseagreen', 'red']
+        content['MASSES']       = [sun.mass, earth.mass, mars.mass]
+        content['RADII']        = [sun.rad, earth.rad, mars.rad]
         content['TRAJECTORIES'] = []
 
         for x in range(steps):
             print(f'{x} | pos: {earth.pos}, vel: {earth.vel}')
-            content['TRAJECTORIES'].append(f'{x} {sun.pos[0]} {sun.pos[1]} {earth.pos[0]} {earth.pos[1]}')
+            content['TRAJECTORIES'].append(
+                f'{x} {sun.pos[0]} {sun.pos[1]} {earth.pos[0]} {earth.pos[1]} {mars.pos[0]} {mars.pos[1]}'
+            )
             earth.step(dt, sun)
+            mars.step(dt, sun)
 
         f.seek(0)
         json.dump(content, f, indent=4)

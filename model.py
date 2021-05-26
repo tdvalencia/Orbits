@@ -11,16 +11,20 @@ class PlotTraj:
         with open(fn, 'r', encoding='utf-8') as f:
             self.data = json.load(f)
 
-        self.steps = self.data['NUM_STEPS']
+        self.steps  = self.data['NUM_STEPS']
+        self.planets = []
 
     def _update(self, frame):
         '''updates the position for each frame of the animation'''
 
         trajectories = self.data['TRAJECTORIES'][frame].split(' ')
-        # print(f'{trajectories[0]} | pos: ({trajectories[3]}, {trajectories[4]})')
 
-        self.star.set_data(float(trajectories[1]), float(trajectories[2]))
-        self.planet.set_data(float(trajectories[3]), float(trajectories[4]))
+        def recursive(idx):
+            return 2*idx+1, 2*idx+2
+
+        for idx in range(len(self.planets)):
+            x, y = recursive(idx)
+            self.planets[idx].set_data(float(trajectories[x]), float(trajectories[y]))
 
     def animate(self):
         '''plots the planet while it orbits sun'''
@@ -30,8 +34,18 @@ class PlotTraj:
         ax.set_xlim(-3e11, 3e11)
         ax.set_ylim(-3e11, 3e11)
 
-        self.star,    = ax.plot(0, 0, 'o-', color='orange', markersize=12)
-        self.planet,  = ax.plot(0, 0, 'o-')
+        for x in range(self.data['NUM_BODIES']):
+            color = self.data['COLORS'][x]
+            name = self.data['NAMES'][x]
+            radius = 0
+            
+            if name == 'Sun':
+                radius = 12
+            else:
+                radius = self.data['RADII'][x]/1e6
+
+            body, = ax.plot(0, 0, 'o-', color=color, markersize=radius)
+            self.planets.append(body)
 
         animation = anime.FuncAnimation(fig, self._update, self.steps, interval=25)
 
@@ -47,8 +61,18 @@ class PlotTraj:
         ax.set_xlim(-3e11, 3e11)
         ax.set_ylim(-3e11, 3e11)
 
-        self.star,    = ax.plot(0, 0, 'o-', color='orange', markersize=12)
-        self.planet,  = ax.plot(0, 0, 'o-')
+        for x in range(self.data['NUM_BODIES']):
+            color = self.data['COLORS'][x]
+            name = self.data['NAMES'][x]
+            radius = 0
+            
+            if name == 'Sun':
+                radius = 12
+            else:
+                radius = self.data['RADII'][x]/1e6
+
+            body, = ax.plot(0, 0, 'o-', color=color, markersize=radius)
+            self.planets.append(body)
 
         plt.grid()
         ax.set_title('Orbit Simulation')
@@ -63,5 +87,5 @@ class PlotTraj:
 
 if __name__ == '__main__':
     plot = PlotTraj('orbits.json')
-    # plot.save('gif', 'orbits', 50)
-    plot.animate()
+    plot.save('gif', 'orbits', 50)
+    # plot.animate()
