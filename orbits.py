@@ -83,6 +83,11 @@ def simulate(fn):
     SUN_MASS        = 1.989e30
     SUN_RADIUS      = 695700000.0
 
+    MER_INIT_POS    = (-46000000000, 0.0)
+    MER_INIT_VEL    = (0.0, -58980.0)
+    MER_MASS        = 0.33011e24
+    MER_RADIUS      = 2439700.0
+
     EARTH_INIT_POS  = (-147095000000.0, 0.0)
     EARTH_INIT_VEL  = (0.0, -30300.0)
     EARTH_MASS      = 5.972e24
@@ -97,6 +102,7 @@ def simulate(fn):
     dt = 86400.0 # 1 earth day in seconds
 
     sun = Body('Sun', (0,0), (0,0), SUN_MASS, SUN_RADIUS)
+    mercury = Body('Mercury', MER_INIT_POS, MER_INIT_VEL, MER_MASS, MER_RADIUS)
     earth = Body('Earth', EARTH_INIT_POS, EARTH_INIT_VEL, EARTH_MASS, EARTH_RADIUS)
     mars = Body('Mars', MARS_INIT_POS, MARS_INIT_VEL, MARS_MASS, MARS_RADIUS)
 
@@ -104,20 +110,22 @@ def simulate(fn):
 
         # add data to json
         content = {}
-        content['NUM_BODIES']   = 3
+        content['NUM_BODIES']   = 4
         content['NUM_STEPS']    = steps
-        content['NAMES']        = [sun.name, earth.name, mars.name]
-        content['COLORS']       = ['orange', 'lightseagreen', 'red']
-        content['MASSES']       = [sun.mass, earth.mass, mars.mass]
-        content['RADII']        = [sun.rad, earth.rad, mars.rad]
+        content['NAMES']        = [sun.name, mercury.name, earth.name, mars.name]
+        content['COLORS']       = ['orange', 'peru', 'lightseagreen', 'red']
+        content['MASSES']       = [sun.mass, mercury.mass, earth.mass, mars.mass]
+        content['RADII']        = [sun.rad, mercury.rad, earth.rad, mars.rad]
         content['TRAJECTORIES'] = []
 
         for x in range(steps):
             content['TRAJECTORIES'].append(
                 f'{x} {sun.pos[0]} {sun.pos[1]} '
+                + f'{mercury.pos[0]} {mercury.pos[1]} '
                 + f'{earth.pos[0]} {earth.pos[1]} '
                 + f'{mars.pos[0]} {mars.pos[1]}'
             )
+            mercury.step(dt, sun)
             earth.step(dt, sun)
             mars.step(dt, sun)
 
