@@ -113,9 +113,10 @@ def simulate(fn):
         content['TRAJECTORIES'] = []
 
         for x in range(steps):
-            print(f'{x} | pos: {earth.pos}, vel: {earth.vel}')
             content['TRAJECTORIES'].append(
-                f'{x} {sun.pos[0]} {sun.pos[1]} {earth.pos[0]} {earth.pos[1]} {mars.pos[0]} {mars.pos[1]}'
+                f'{x} {sun.pos[0]} {sun.pos[1]} '
+                + f'{earth.pos[0]} {earth.pos[1]} '
+                + f'{mars.pos[0]} {mars.pos[1]}'
             )
             earth.step(dt, sun)
             mars.step(dt, sun)

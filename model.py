@@ -40,7 +40,7 @@ class PlotTraj:
             radius = 0
             
             if name == 'Sun':
-                radius = 12
+                radius = 15
             else:
                 radius = self.data['RADII'][x]/1e6
 
@@ -67,7 +67,7 @@ class PlotTraj:
             radius = 0
             
             if name == 'Sun':
-                radius = 12
+                radius = 15
             else:
                 radius = self.data['RADII'][x]/1e6
 
@@ -87,5 +87,5 @@ class PlotTraj:
 
 if __name__ == '__main__':
     plot = PlotTraj('orbits.json')
-    plot.save('gif', 'orbits', 50)
-    # plot.animate()
+    # plot.save('gif', 'orbits', 50)
+    plot.animate()
