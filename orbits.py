@@ -16,22 +16,22 @@ class Body:
     def compute_acceleration(self, x, y):
         '''
             does some maths to find the acceleration of a body. 
-            Newton's F=ma and Gravitational Force between two bodies.
+            Newton's F=ma and Gravitational Force between two masses.
         '''
 
         G = 6.67408e-11
-        m = self.mass
+        M = self.mass
 
-        dx = x - self.pos[0]
-        dy = y - self.pos[1]
+        dx = self.pos[0] - x
+        dy = self.pos[1] - y
 
         # simple
-        # ax = (G * m)/(dx**2 + dy**2) * (-x)/np.sqrt(dx**2 + dy**2)
-        # ay = (G * m)/(dx**2 + dy**2) * (-y)/np.sqrt(dx**2 + dy**2)
+        # ax = (G * M)/(x**2 + y**2) * (-x)/np.sqrt(x**2 + y**2)
+        # ay = (G * M)/(x**2 + y**2) * (-y)/np.sqrt(x**2 + y**2)
 
         # less simple
-        ax = (G * m)/(dx**2 + dy**2) * -(dx)/np.sqrt(dx**2 + dy**2)
-        ay = (G * m)/(dx**2 + dy**2) * -(dy)/np.sqrt(dx**2 + dy**2)
+        ax = (G * M)/(dx**2 + dy**2) * (dx)/np.sqrt(dx**2 + dy**2)
+        ay = (G * M)/(dx**2 + dy**2) * (dy)/np.sqrt(dx**2 + dy**2)
 
         return ax, ay
 
@@ -54,7 +54,7 @@ class Body:
         k1vx, k1vy = body.compute_acceleration(self.pos[0], self.pos[1])
 
         # k2 params
-        k2x = self.vel[0]  + (dt/2 * k1vx)
+        k2x = self.vel[0] + (dt/2 * k1vx)
         k2y = self.vel[1] + (dt/2 * k1vy)
         k2vx, k2vy = body.compute_acceleration(self.pos[0] + (dt/2 * k1x), self.pos[1] + (dt/2 * k1y))
 
@@ -64,19 +64,28 @@ class Body:
         k3vx, k3vy = body.compute_acceleration(self.pos[0] + (dt/2 * k2x), self.pos[1] + (dt/2 * k2y))
 
         # k4 params
-        k4x = self.vel[0] + (dt/2 * k3vx)
-        k4y = self.vel[1] + (dt/2 * k3vy)
-        k4vx, k4vy = body.compute_acceleration(self.pos[0] + (dt/2 * k3x), self.pos[1] + (dt/2 * k3y))
+        k4x = self.vel[0] + (dt * k3vx)
+        k4y = self.vel[1] + (dt * k3vy)
+        k4vx, k4vy = body.compute_acceleration(self.pos[0] + (dt * k3x), self.pos[1] + (dt * k3y))
 
         # calc new pos
-        xn = self.pos[0] + dt/6 * (k1x + 2*k2x + 2*k3x + k4x)
-        yn = self.pos[1] + dt/6 * (k1y + 2*k2y + 2*k3y + k4y)
-        self.pos = (xn, yn)
+        # 'n' at start stands for next in recursive function
+        nxn = self.pos[0] + dt/6 * (k1x + 2*k2x + 2*k3x + k4x)
+        nyn = self.pos[1] + dt/6 * (k1y + 2*k2y + 2*k3y + k4y)
+        self.pos = (nxn, nyn)
 
         # calc new vel
-        vxn = self.vel[0] + dt/6 * (k1vx + 2*k2vx + 2*k3vx + k4vx)
-        vyn = self.vel[1] + dt/6 * (k1vy + 2*k2vy + 2*k3vy + k4vy)
-        self.vel = (vxn, vyn)
+        nvxn = self.vel[0] + dt/6 * (k1vx + 2*k2vx + 2*k3vx + k4vx)
+        nvyn = self.vel[1] + dt/6 * (k1vy + 2*k2vy + 2*k3vy + k4vy)
+        self.vel = (nvxn, nvyn)
+
+    # Helper functions
+
+    def __str__(self):
+        return f'{self.name} | {self.pos} {self.vel} {self.mass} {self.rad}'
+
+    def __repr__(self):
+        return self.__str__()
 
 def simulate(fn):
 
