@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as anime
-import json
+import json, sys
 
 class PlotTraj:
     '''used to visualize all the data from the simulation'''
@@ -86,6 +86,13 @@ class PlotTraj:
             animation.save(f'docs/{fn}.mp4', writer='ffmpeg', fps=fps)        
 
 if __name__ == '__main__':
-    plot = PlotTraj('orbits.json')
+
+    fn = 'orbits.json'
+
+    for x in sys.argv:
+        if '.json' in x:
+            fn = x
+
+    plot = PlotTraj(fn)
     # plot.save('gif', 'orbits', 50)
     plot.animate()
