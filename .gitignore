@@ -116,6 +116,7 @@ dmypy.json
 # Project related
 .vscode
 prompt.pdf
+test/
 
 # Data
 orbits.json
