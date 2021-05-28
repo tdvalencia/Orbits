@@ -92,7 +92,7 @@ def simulate(fn):
     SUN_MASS        = 1.989e30
     SUN_RADIUS      = 695700000.0
 
-    MER_INIT_POS    = (-46000000000, 0.0)
+    MER_INIT_POS    = (-46000000000.0, 0.0)
     MER_INIT_VEL    = (0.0, -58980.0)
     MER_MASS        = 0.33011e24
     MER_RADIUS      = 2439700.0
