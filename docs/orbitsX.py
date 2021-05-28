@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Cross compatible version
 
 import math
 import json
