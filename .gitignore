@@ -115,7 +115,7 @@ dmypy.json
 
 # Project related
 .vscode
-prompt.pdf
+*.pdf
 test/
 
 # Data

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import json
+import json, sys
 
 #TODO: 🌌 Do orbital mechanics math...
 
@@ -145,4 +145,11 @@ def simulate(fn):
         f.truncate()
 
 if __name__ == '__main__':
-    simulate('orbits.json')
+
+    fn = 'orbits.json'
+
+    for x in sys.argv:
+        if '.json' in x:
+            fn = x
+
+    simulate(fn)
