@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import numpy as np
+import math
 import json
 
 #TODO: 🌌 Do orbital mechanics math...
@@ -32,8 +32,8 @@ class Body:
         # ay = (G * M)/(x**2 + y**2) * (-y)/np.sqrt(x**2 + y**2)
 
         # less simple
-        ax = (G * M)/(dx**2 + dy**2) * (dx)/np.sqrt(dx**2 + dy**2)
-        ay = (G * M)/(dx**2 + dy**2) * (dy)/np.sqrt(dx**2 + dy**2)
+        ax = (G * M)/(dx**2 + dy**2) * (dx)/math.sqrt(dx**2 + dy**2)
+        ay = (G * M)/(dx**2 + dy**2) * (dy)/math.sqrt(dx**2 + dy**2)
 
         return ax, ay
 
@@ -84,7 +84,7 @@ class Body:
     # Helper functions
 
     def __str__(self):
-        return f'{self.name} | {self.pos} {self.vel} {self.mass} {self.rad}'
+        return '{} | {} {} {} {}'.format(self.name, self.pos, self.vel, self.mass, self.rad)
 
     def __repr__(self):
         return self.__str__()
@@ -117,7 +117,7 @@ def simulate(fn):
     earth = Body('Earth', EARTH_INIT_POS, EARTH_INIT_VEL, EARTH_MASS, EARTH_RADIUS)
     mars = Body('Mars', MARS_INIT_POS, MARS_INIT_VEL, MARS_MASS, MARS_RADIUS)
 
-    with open(fn, 'w', encoding='utf-8') as f:
+    with open(fn, 'w') as f:
 
         # add data to json
         content = {}
@@ -131,10 +131,10 @@ def simulate(fn):
 
         for x in range(steps):
             content['TRAJECTORIES'].append(
-                f'{x} {sun.pos[0]} {sun.pos[1]} '
-                + f'{mercury.pos[0]} {mercury.pos[1]} '
-                + f'{earth.pos[0]} {earth.pos[1]} '
-                + f'{mars.pos[0]} {mars.pos[1]}'
+                '{} {} {} '.format(x, sun.pos[0], sun.pos[1])
+                + '{} {} '.format(mercury.pos[0], mercury.pos[1])
+                + '{} {} '.format(earth.pos[0], earth.pos[1])
+                + '{} {} '.format(mars.pos[0], mars.pos[1])
             )
             mercury.step(dt, sun)
             earth.step(dt, sun)
