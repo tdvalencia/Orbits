@@ -119,9 +119,10 @@ dmypy.json
 test/
 
 # Data
-orbits.json
-*.mp4
+*.json
+!sample.json
 
+*.mp4
 *.gif
 !orbits.gif
 
