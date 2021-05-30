@@ -37,7 +37,7 @@ class Body:
 
         return ax, ay
 
-    def step(self, dt, body):
+    def step(self, dt, bodies):
         '''
             4th-order Runge-Kutta integrator.
             A method used to solve Ordinary Differential equations.
@@ -53,22 +53,42 @@ class Body:
 
         # k1 params
         k1x, k1y = self.vel[0], self.vel[1]
-        k1vx, k1vy = body.compute_acceleration(self.pos[0], self.pos[1])
+
+        k1vx, k1vy = bodies[0].compute_acceleration(self.pos[0], self.pos[1])
+        for x in range(1, len(bodies)):
+            temp1, temp2 = bodies[x].compute_acceleration(self.pos[0], self.pos[1])
+            k1vx += temp1
+            k1vy += temp2
 
         # k2 params
         k2x = self.vel[0] + (dt/2 * k1vx)
         k2y = self.vel[1] + (dt/2 * k1vy)
-        k2vx, k2vy = body.compute_acceleration(self.pos[0] + (dt/2 * k1x), self.pos[1] + (dt/2 * k1y))
+
+        k2vx, k2vy = bodies[0].compute_acceleration(self.pos[0] + (dt/2 * k1x), self.pos[1] + (dt/2 * k1y))
+        for x in range(1, len(bodies)):
+            temp1, temp2 = bodies[x].compute_acceleration(self.pos[0] + (dt/2 * k1x), self.pos[1] + (dt/2 * k1y))
+            k2vx += temp1
+            k2vy += temp2
 
         # k3 params
         k3x = self.vel[0] + (dt/2 * k2vx)
         k3y = self.vel[1] + (dt/2 * k2vy)
-        k3vx, k3vy = body.compute_acceleration(self.pos[0] + (dt/2 * k2x), self.pos[1] + (dt/2 * k2y))
+
+        k3vx, k3vy = bodies[0].compute_acceleration(self.pos[0] + (dt/2 * k2x), self.pos[1] + (dt/2 * k2y))
+        for x in range(1, len(bodies)):
+            temp1, temp2 = bodies[x].compute_acceleration(self.pos[0] + (dt/2 * k2x), self.pos[1] + (dt/2 * k2y))
+            k3vx += temp1
+            k3vy += temp2
 
         # k4 params
         k4x = self.vel[0] + (dt * k3vx)
         k4y = self.vel[1] + (dt * k3vy)
-        k4vx, k4vy = body.compute_acceleration(self.pos[0] + (dt * k3x), self.pos[1] + (dt * k3y))
+
+        k4vx, k4vy = bodies[0].compute_acceleration(self.pos[0] + (dt * k3x), self.pos[1] + (dt * k3y))
+        for x in range(1, len(bodies)):
+            temp1, temp2 = bodies[x].compute_acceleration(self.pos[0] + (dt/2 * k3x), self.pos[1] + (dt/2 * k3y))
+            k4vx += temp1
+            k4vy += temp2
 
         # calc new pos
         # 'n' at start stands for next in recursive function
@@ -136,9 +156,15 @@ def simulate(fn):
                 + f'{earth.pos[0]} {earth.pos[1]} '
                 + f'{mars.pos[0]} {mars.pos[1]}'
             )
-            mercury.step(dt, sun)
-            earth.step(dt, sun)
-            mars.step(dt, sun)
+
+            bodies = [sun, earth, mars]
+            mercury.step(dt, bodies)
+
+            bodies = [sun, mercury, mars]
+            earth.step(dt, bodies)
+
+            bodies = [sun, mercury, earth]
+            mars.step(dt, bodies)
 
         f.seek(0)
         json.dump(content, f, indent=4)
