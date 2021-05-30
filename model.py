@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import matplotlib.pyplot as plt
 import matplotlib.animation as anime
 import json, sys
@@ -79,11 +81,11 @@ class PlotTraj:
 
         if out.lower() == 'gif':
             animation = anime.FuncAnimation(fig, self._update, self.steps, interval=10)
-            animation.save(f'docs/{fn}.gif', writer='imagemagick', fps=fps) 
+            animation.save(f'{fn}.gif', writer='imagemagick', fps=fps) 
         
         elif out.lower() == 'mp4':
             animation = anime.FuncAnimation(fig, self._update, self.steps, interval=10)
-            animation.save(f'docs/{fn}.mp4', writer='ffmpeg', fps=fps)        
+            animation.save(f'{fn}.mp4', writer='ffmpeg', fps=fps)        
 
 if __name__ == '__main__':
 
