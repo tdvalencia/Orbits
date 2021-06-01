@@ -17,7 +17,7 @@ class Body:
 
     def compute_acceleration(self, x, y):
         '''
-            does some maths to find the acceleration of a body. 
+            does some maths to find the acceleration of a body.
             Newton's F=ma and Gravitational Force between two masses.
         '''
 

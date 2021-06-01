@@ -6,10 +6,10 @@ import json, sys
 
 class PlotTraj:
     '''used to visualize all the data from the simulation'''
-    
+
     def __init__(self, fn):
         '''reads all the data from json file'''
-        
+
         with open(fn, 'r', encoding='utf-8') as f:
             self.data = json.load(f)
 
@@ -40,7 +40,7 @@ class PlotTraj:
             color = self.data['COLORS'][x]
             name = self.data['NAMES'][x]
             radius = 0
-            
+
             if name == 'Sun':
                 radius = 15
             else:
@@ -67,7 +67,7 @@ class PlotTraj:
             color = self.data['COLORS'][x]
             name = self.data['NAMES'][x]
             radius = 0
-            
+
             if name == 'Sun':
                 radius = 15
             else:
@@ -81,11 +81,11 @@ class PlotTraj:
 
         if out.lower() == 'gif':
             animation = anime.FuncAnimation(fig, self._update, self.steps, interval=10)
-            animation.save(f'{fn}.gif', writer='imagemagick', fps=fps) 
-        
+            animation.save(f'{fn}.gif', writer='imagemagick', fps=fps)
+
         elif out.lower() == 'mp4':
             animation = anime.FuncAnimation(fig, self._update, self.steps, interval=10)
-            animation.save(f'{fn}.mp4', writer='ffmpeg', fps=fps)        
+            animation.save(f'{fn}.mp4', writer='ffmpeg', fps=fps)
 
 if __name__ == '__main__':
 
