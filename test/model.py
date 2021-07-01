@@ -41,7 +41,7 @@ class PlotTraj:
             name = self.data['NAMES'][x]
             radius = 0
 
-            if name == 'Sun':
+            if name.lower() == 'sun':
                 radius = 15
             else:
                 radius = self.data['RADII'][x]/1e6

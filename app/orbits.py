@@ -1,11 +1,4 @@
-# -*- coding: utf-8 -*-
-# Cross compatible version
-
-import math
-import json
-import sys
-
-#TODO: 🌌 Do orbital mechanics math...
+import numpy as np
 
 class Body:
     '''does some maths to model orbits'''
@@ -19,7 +12,7 @@ class Body:
 
     def compute_acceleration(self, x, y):
         '''
-            does some maths to find the acceleration of a body. 
+            does some maths to find the acceleration of a body.
             Newton's F=ma and Gravitational Force between two masses.
         '''
 
@@ -29,17 +22,12 @@ class Body:
         dx = self.pos[0] - x
         dy = self.pos[1] - y
 
-        # simple
-        # ax = (G * M)/(x**2 + y**2) * (-x)/np.sqrt(x**2 + y**2)
-        # ay = (G * M)/(x**2 + y**2) * (-y)/np.sqrt(x**2 + y**2)
-
-        # less simple
-        ax = (G * M)/(dx**2 + dy**2) * (dx)/math.sqrt(dx**2 + dy**2)
-        ay = (G * M)/(dx**2 + dy**2) * (dy)/math.sqrt(dx**2 + dy**2)
+        ax = (G * M)/(dx**2 + dy**2) * (dx)/np.sqrt(dx**2 + dy**2)
+        ay = (G * M)/(dx**2 + dy**2) * (dy)/np.sqrt(dx**2 + dy**2)
 
         return ax, ay
 
-    def step(self, dt, body):
+    def step(self, dt, bodies):
         '''
             4th-order Runge-Kutta integrator.
             A method used to solve Ordinary Differential equations.
@@ -54,23 +42,44 @@ class Body:
         '''
 
         # k1 params
-        k1x, k1y = self.vel[0], self.vel[1]
-        k1vx, k1vy = body.compute_acceleration(self.pos[0], self.pos[1])
+        k1x = self.vel[0]
+        k1y = self.vel[1]
+
+        k1vx, k1vy = bodies[0].compute_acceleration(self.pos[0], self.pos[1])
+        for x in range(1, len(bodies)):
+            temp1, temp2 = bodies[x].compute_acceleration(self.pos[0], self.pos[1])
+            k1vx += temp1
+            k1vy += temp2
 
         # k2 params
         k2x = self.vel[0] + (dt/2 * k1vx)
         k2y = self.vel[1] + (dt/2 * k1vy)
-        k2vx, k2vy = body.compute_acceleration(self.pos[0] + (dt/2 * k1x), self.pos[1] + (dt/2 * k1y))
+
+        k2vx, k2vy = bodies[0].compute_acceleration(self.pos[0] + (dt/2 * k1x), self.pos[1] + (dt/2 * k1y))
+        for x in range(1, len(bodies)):
+            temp1, temp2 = bodies[x].compute_acceleration(self.pos[0] + (dt/2 * k1x), self.pos[1] + (dt/2 * k1y))
+            k2vx += temp1
+            k2vy += temp2
 
         # k3 params
         k3x = self.vel[0] + (dt/2 * k2vx)
         k3y = self.vel[1] + (dt/2 * k2vy)
-        k3vx, k3vy = body.compute_acceleration(self.pos[0] + (dt/2 * k2x), self.pos[1] + (dt/2 * k2y))
+
+        k3vx, k3vy = bodies[0].compute_acceleration(self.pos[0] + (dt/2 * k2x), self.pos[1] + (dt/2 * k2y))
+        for x in range(1, len(bodies)):
+            temp1, temp2 = bodies[x].compute_acceleration(self.pos[0] + (dt/2 * k2x), self.pos[1] + (dt/2 * k2y))
+            k3vx += temp1
+            k3vy += temp2
 
         # k4 params
         k4x = self.vel[0] + (dt * k3vx)
         k4y = self.vel[1] + (dt * k3vy)
-        k4vx, k4vy = body.compute_acceleration(self.pos[0] + (dt * k3x), self.pos[1] + (dt * k3y))
+
+        k4vx, k4vy = bodies[0].compute_acceleration(self.pos[0] + (dt * k3x), self.pos[1] + (dt * k3y))
+        for x in range(1, len(bodies)):
+            temp1, temp2 = bodies[x].compute_acceleration(self.pos[0] + (dt/2 * k3x), self.pos[1] + (dt/2 * k3y))
+            k4vx += temp1
+            k4vy += temp2
 
         # calc new pos
         # 'n' at start stands for next in recursive function
@@ -84,9 +93,8 @@ class Body:
         self.vel = (nvxn, nvyn)
 
     # Helper functions
-
     def __str__(self):
-        return '{} | {} {} {} {}'.format(self.name, self.pos, self.vel, self.mass, self.rad)
+        return f'{self.name} | {self.pos} {self.vel} {self.mass} {self.rad}'
 
     def __repr__(self):
         return self.__str__()
@@ -119,7 +127,7 @@ def simulate(fn):
     earth = Body('Earth', EARTH_INIT_POS, EARTH_INIT_VEL, EARTH_MASS, EARTH_RADIUS)
     mars = Body('Mars', MARS_INIT_POS, MARS_INIT_VEL, MARS_MASS, MARS_RADIUS)
 
-    with open(fn, 'w') as f:
+    with open(fn, 'w', encoding='utf-8') as f:
 
         # add data to json
         content = {}
@@ -133,14 +141,20 @@ def simulate(fn):
 
         for x in range(steps):
             content['TRAJECTORIES'].append(
-                '{} {} {} '.format(x, sun.pos[0], sun.pos[1])
-                + '{} {} '.format(mercury.pos[0], mercury.pos[1])
-                + '{} {} '.format(earth.pos[0], earth.pos[1])
-                + '{} {} '.format(mars.pos[0], mars.pos[1])
+                f'{x} {sun.pos[0]} {sun.pos[1]} '
+                + f'{mercury.pos[0]} {mercury.pos[1]} '
+                + f'{earth.pos[0]} {earth.pos[1]} '
+                + f'{mars.pos[0]} {mars.pos[1]}'
             )
-            mercury.step(dt, sun)
-            earth.step(dt, sun)
-            mars.step(dt, sun)
+
+            bodies = [sun, earth, mars]
+            mercury.step(dt, bodies)
+
+            bodies = [sun, mercury, mars]
+            earth.step(dt, bodies)
+
+            bodies = [sun, mercury, earth]
+            mars.step(dt, bodies)
 
         f.seek(0)
         json.dump(content, f, indent=4)

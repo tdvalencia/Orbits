@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Simulate Orbits</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    <link rel="stylesheet" href="/static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/Contact-Form-Clean.css">
+    <link rel="stylesheet" href="/static/css/Footer-Dark.css">
+</head>
+
+<body style="height: 850px;margin: 0px;padding: 0px;padding-top: 10px;">
+    <header class="masthead"></header>
+    <article></article>
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav" style="background: var(--bs-dark);">
+        <div class="container"><a class="navbar-brand" href="https://github.com/theTonyVal" style="color: var(--bs-white);">theTonyVal</a><button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item" style="color: var(--bs-blue);"><a class="nav-link" href="/" style="font-size: 12px;color: var(--bs-white);">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about" style="color: var(--bs-white);">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/simulate" style="color: var(--bs-white);">Simulate</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <form id="form" style="padding: 100px 0px 0px;padding-top: 38px;padding-right: 50px;padding-left: 25px;" action="http://127.0.0.1:5000/watermelon">
+        <p>For areas marked "list", list the values separated by a comma (i.e "sun, earth, mars" for Names). Spaces are okay.</p>
+        <div class="row">
+            <div class="col"><label class="form-label">Number of Bodies:</label><input class="form-control" type="number"></div>
+        </div>
+        <div class="row">
+            <div class="col"><label class="form-label">Names (list):</label><input class="form-control" type="text"></div>
+        </div>
+        <div class="row">
+            <div class="col"><label class="form-label">Colors (list):</label><input class="form-control" type="text"></div>
+        </div>
+        <div class="row">
+            <div class="col"><label class="form-label">Distance from Center (list):</label><input class="form-control" type="text"></div>
+        </div>
+        <div class="row">
+            <div class="col"><label class="form-label">Velocities (list):</label><input class="form-control" type="text"></div>
+        </div>
+        <div class="row">
+            <div class="col"><label class="form-label">Masses (list):</label><input class="form-control" type="text"></div>
+        </div>
+        <div class="row">
+            <div class="col"><label class="form-label">Radii (list):</label><input class="form-control" type="text"></div>
+        </div>
+        <div class="row">
+            <div class="col"><label class="form-label">Number of Steps (Time period in Earth days):</label><input class="form-control" type="number"></div>
+        </div>
+        <br>
+        <button id="simulate" type="button">
+            Simulate
+        </button>
+    </form>
+    <canvas id="model" style="max-width:640px;max-height:480px;height:100%;width:100%;"></canvas>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="/static/js/orbits.js"></script>
+</body>
+
+</html>

@@ -115,14 +115,12 @@ dmypy.json
 
 # Project related
 .vscode
+Gravitation.png
 *.pdf
-*.jpg
-*.png
-test/
 
 # Data
 *.json
-!sample.json
+!orbits.json
 
 *.mp4
 *.gif
