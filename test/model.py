@@ -68,7 +68,7 @@ class PlotTraj:
             name = self.data['NAMES'][x]
             radius = 0
 
-            if name == 'Sun':
+            if name == 'sun':
                 radius = 15
             else:
                 radius = self.data['RADII'][x]/1e6
@@ -96,5 +96,5 @@ if __name__ == '__main__':
             fn = x
 
     plot = PlotTraj(fn)
-    # plot.save('gif', 'orbits', 50)
-    plot.animate()
+    plot.save('gif', 'orbits', 50)
+    # plot.animate()

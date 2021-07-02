@@ -30,28 +30,28 @@
     <form id="form" style="padding: 100px 0px 0px;padding-top: 38px;padding-right: 50px;padding-left: 25px;" action="http://127.0.0.1:5000/watermelon">
         <p>For areas marked "list", list the values separated by a comma (i.e "sun, earth, mars" for Names). Spaces are okay.</p>
         <div class="row">
-            <div class="col"><label class="form-label">Number of Bodies:</label><input class="form-control" type="number"></div>
+            <div class="col"><label class="form-label">Number of Bodies:</label><input class="form-control" type="number" id="NUM_BODIES"></div>
         </div>
         <div class="row">
-            <div class="col"><label class="form-label">Names (list):</label><input class="form-control" type="text"></div>
+            <div class="col"><label class="form-label">Names (list):</label><input class="form-control" type="text" id="NAMES"></div>
         </div>
         <div class="row">
-            <div class="col"><label class="form-label">Colors (list):</label><input class="form-control" type="text"></div>
+            <div class="col"><label class="form-label">Colors (list):</label><input class="form-control" type="text" id="COLORS"></div>
         </div>
         <div class="row">
-            <div class="col"><label class="form-label">Distance from Center (list):</label><input class="form-control" type="text"></div>
+            <div class="col"><label class="form-label">Distance from Center (list):</label><input class="form-control" type="text" id="DIST"></div>
         </div>
         <div class="row">
-            <div class="col"><label class="form-label">Velocities (list):</label><input class="form-control" type="text"></div>
+            <div class="col"><label class="form-label">Velocities (list):</label><input class="form-control" type="text" id="VEL"></div>
         </div>
         <div class="row">
-            <div class="col"><label class="form-label">Masses (list):</label><input class="form-control" type="text"></div>
+            <div class="col"><label class="form-label">Masses (list):</label><input class="form-control" type="text" id="MASSES"></div>
         </div>
         <div class="row">
-            <div class="col"><label class="form-label">Radii (list):</label><input class="form-control" type="text"></div>
+            <div class="col"><label class="form-label">Radii (list):</label><input class="form-control" type="text" id="RADII"></div>
         </div>
         <div class="row">
-            <div class="col"><label class="form-label">Number of Steps (Time period in Earth days):</label><input class="form-control" type="number"></div>
+            <div class="col"><label class="form-label">Number of Steps (Time period in Earth days):</label><input class="form-control" type="number" id="NUM_STEPS"></div>
         </div>
         <br>
         <button id="simulate" type="button">
@@ -60,7 +60,6 @@
     </form>
     <canvas id="model" style="max-width:640px;max-height:480px;height:100%;width:100%;"></canvas>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script src="/static/js/orbits.js"></script>
 </body>
